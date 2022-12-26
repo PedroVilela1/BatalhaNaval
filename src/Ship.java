@@ -136,5 +136,4 @@ public class Ship extends Board{
 		this.ship1[5][0]=" ";
 		
 	}
-	
 }

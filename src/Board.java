@@ -6,8 +6,8 @@ public class Board extends Player{
 	public String[][] getDefenseBoard() {
 		return defenseBoard;
 	}
-	public void setDefenseBoard(String[][] defenseBoard) {
-		this.defenseBoard = defenseBoard;
+	public void setDefenseBoard(String defenseBoard,int i,int j) {
+		this.defenseBoard[i][j]= defenseBoard;
 	}
 	public String[][] getAttackBoard() {
 		return attackBoard;

@@ -8,11 +8,26 @@ public static void main(String[] args){
 	p1.requestName();
 	p1.createDefenseBoard();
 	
-	for(int i=0;i<4;i++) {
+	while(p1.getTries() != 0) {
 		p1.printDefenseBoard();
+		p1.requestShip();
 		p1.requestPositionValue();
-		p1.requestDirection();
+		//p1.requestDirection();
+		p1.setPositionShip();
 		p1.clearConsole();
+	}
+	
+	p2.requestName();
+	p2.createDefenseBoard();
+	
+	while(p2.getTries() != 0) {
+		p2.printDefenseBoard();
+		p2.requestShip();
+		p2.requestPositionValue();
+		//p1.requestDirection();
+		p2.setPositionShip();
+		p2.clearConsole();
+		
 		}
 	}
 }
