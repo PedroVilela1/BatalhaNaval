@@ -9,33 +9,23 @@ public class Ship extends Board{
 	public String[][] getPortaAvioes() {
 		return portaAvioes;
 	}
-	public void setPortaAvioes(String[][] portaAvioes) {
-		this.portaAvioes = portaAvioes;
-	}
+	
 	public String[][] getShip4() {
 		return ship4;
 	}
-	public void setShip4(String[][] ship4) {
-		this.ship4 = ship4;
-	}
+	
 	public String[][] getShip3() {
 		return ship3;
 	}
-	public void setShip3(String[][] ship3) {
-		this.ship3 = ship3;
-	}
+	
 	public String[][] getShip2() {
 		return ship2;
 	}
-	public void setShip2(String[][] ship2) {
-		this.ship2 = ship2;
-	}
+	
 	public String[][] getShip1() {
 		return ship1;
 	}
-	public void setShip1(String[][] ship1) {
-		this.ship1 = ship1;
-	}
+	
 	
 	public void setHorizontal() {
 		this.ship4=new String [1][4];
