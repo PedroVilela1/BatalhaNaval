@@ -1,5 +1,7 @@
+package entities;
 import java.util.Scanner;
 public class Player {
+	
 	private String name;
 
 	public String getName() {
@@ -13,6 +15,6 @@ public class Player {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Digite seu Nome: ");
 		this.name = sc.nextLine();
-		
-	}	
+	}
+	
 }

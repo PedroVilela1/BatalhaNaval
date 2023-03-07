@@ -1,12 +1,18 @@
+package procedures;
 import java.util.Scanner;
 
-public class GameExecution extends Ship{
+import entities.AttackBoard;
+import entities.DefenseBoard;
+import entities.Ship;
+
+public class GameExecution{
+	
 	private String positionValue;
 	private String letter;
 	private String numberX;
 	private String numberY;
-	//private String direction;
 	private String selectedShip;
+	//private String direction;
 	private int tries=4;
 	
 	public int getTries() {
@@ -14,6 +20,9 @@ public class GameExecution extends Ship{
 	}
 	public void setTries(int tries) {
 		this.tries = tries;
+	}
+	public void	lessTries() {
+		this.tries = this.tries - 1;
 	}
 	public void setPositionValue(String positionValue) {
 		this.positionValue = positionValue;
@@ -31,71 +40,55 @@ public class GameExecution extends Ship{
 	public String getSelectedShip() {
 		return this.selectedShip;
 	}
-
+	
 	public void clearConsole() {
 		for(int i =0;i<20;i++) {
 			System.out.println();
 		}
 	}
 	
-	public void setPositionShip(){
-		setHorizontal();
+	public boolean setPositionShip(DefenseBoard board,Ship selectedShip){		
+		
 		int intNumberX = Integer.parseInt(this.numberX);
 		int intNumberY = Integer.parseInt(this.numberY);
-		int length= 0;
-		
-		switch(this.selectedShip) {
-			case "ship4":
-				length=this.getShip4()[0].length;
-				break;
-			case "ship3":
-				
-				length=this.getShip3()[0].length;
-				break;
-			case "ship2":
-				length=this.getShip2()[0].length;
-				break;
-			case "ship1":
-				length=this.getShip1()[0].length;
-				break;
-		}
+		int length = selectedShip.getShip()[0].length;
 		
 		for(int i =0;i< 10;i++) {
 			for(int j=0;j< 10;j++) {
 				if(j==intNumberY && i <= intNumberX && i > (intNumberX-length))  {
-					setDefenseBoard("N",i,j);
+					board.setBoard("N",i,j);
 				}
-				switch(this.selectedShip) {
-				case "ship4":
-					break;
-				case "ship3":
+				
+				if(selectedShip.getShip()[0].length == 7) {
 					if(j==intNumberY && i == intNumberX-3 ) {
-						setDefenseBoard("0",i,j);
+						 board.setBoard("0",i,j);
 					}
-					break;
-				case "ship2":
+				}
+				
+				if(selectedShip.getShip()[0].length == 8) {
 					if(j==intNumberY && i == intNumberX-2 ) {
-						setDefenseBoard("0",i,j);
+						board.setBoard("0",i,j);
 					}
 					if(j==intNumberY && i == intNumberX-5 ) {
-						setDefenseBoard("0",i,j);
+						board.setBoard("0",i,j);
 					}
-					break;
-				case "ship1":
+				}
+				
+				if(selectedShip.getShip()[0].length == 7 && selectedShip.getShip()[0][1]==" ") {
 					if(j==intNumberY && i == intNumberX-1) {
-						setDefenseBoard("0",i,j);
+						board.setBoard("0",i,j);
 					}
 					if(j==intNumberY && i == intNumberX-3 ) {
-						setDefenseBoard("0",i,j);
+						board.setBoard("0",i,j);
 					}
 					if(j==intNumberY && i == intNumberX-5 ) {
-						setDefenseBoard("0",i,j);
+						board.setBoard("0",i,j);
 					}
-					break;
 				}
 			}
 		}
 		//os barcos estão na vertical
+		return true;
 	}
 	
 	public void treatString() {
@@ -152,13 +145,16 @@ public class GameExecution extends Ship{
 	}
 	
 	public void requestPositionValue() {
+		
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Digite a posição: ");
+
+		System.out.print("Digite a posição (Ex:A-5): ");
 		this.positionValue = sc.nextLine();
 		
 		treatString();
 		
 	}
+
 	
 	//public void requestDirection() {
 		//Scanner sc = new Scanner(System.in);
@@ -176,8 +172,32 @@ public class GameExecution extends Ship{
 	
 	public void requestShip() {
 		Scanner sc = new Scanner(System.in);
+		System.out.println("Navios: (Ship1) (Ship2) (Ship3) (Ship4)");
 		System.out.print("Digite o navio selecionado: ");
 		this.selectedShip = sc.nextLine().toLowerCase();
-		
+	}
+	
+	public void printInstructions() {
+
+		System.out.println("");
+	}
+	
+	public boolean setAttack(AttackBoard board) {
+		int intNumberX = Integer.parseInt(this.numberX);
+		int intNumberY = Integer.parseInt(this.numberY);
+		for(int i =0;i< 10;i++) {
+			for(int j=0;j< 10;j++) {
+				if(j==intNumberY && i == intNumberX )  {
+					board.setBoard("N",i,j);
+				}
+			}
+		}
+		return true;
+	}
+	
+	public void requestProgress() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Aperte enter para prosseguir");
+		sc.nextLine();
 	}
 }
