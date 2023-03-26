@@ -1,6 +1,8 @@
 package entities;
 
-public class Board {
+import interfaces.BoardInterface;
+
+public abstract class Board implements BoardInterface{
 	private String[][] Board = new String[10][10];
 	
 	public String[][] getBoard() {
