@@ -1,7 +1,7 @@
 package interfaces;
 
 public interface BoardInterface {
-	String[][] Board = new String[10][10];
+	String[][] board = new String[10][10];
 	
 	public String[][] getBoard() ;
 	

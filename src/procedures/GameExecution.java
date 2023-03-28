@@ -51,7 +51,7 @@ public class GameExecution{
 	}
 	
 	public void clearConsole() {
-		for(int i =0;i<20;i++) {
+		for(int i =0;i<100;i++) {
 			System.out.println();
 		}
 	}

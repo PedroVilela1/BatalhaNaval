@@ -28,7 +28,7 @@ public class Check {
 	
 	public void checkHit() {
 		
-		if(this.right>0) {
+		if(this.right>=1) {
 			System.out.println("Você acertou o tiro pelo menos uma vez");
 		}else {
 			System.out.println("Você não acertou nenhum tiro");

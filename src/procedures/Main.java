@@ -215,7 +215,7 @@ public class Main {
 					attackBoardP1.printBoard();
 					gameExecutionP1.requestProgress();
 					gameExecutionP1.clearConsole();
-					checkP2.checkRight(defenseBoardP2,gameExecutionP1.getNumberX(),gameExecutionP1.getNumberY());
+					checkP1.checkRight(defenseBoardP2,gameExecutionP1.getNumberX(),gameExecutionP1.getNumberY());
 					checkP1.checkVictory(defenseBoardP2, attackBoardP1);
 					if(checkP1.getVictory()==true) {
 						System.out.println("Parabéns "+ p1.getName() +" - Você venceu a partida");
