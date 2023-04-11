@@ -21,7 +21,7 @@ public class Check {
 		int intNumberX = Integer.parseInt(numberX);
 		int intNumberY = Integer.parseInt(numberY);
 		
-		if(defenseBoard.getBoard()[intNumberX][intNumberY].equals("N")) {
+		if(defenseBoard.getBoard()[intNumberX][intNumberY].getText().equals("N")) {
 			this.right++;
 		}
 	}

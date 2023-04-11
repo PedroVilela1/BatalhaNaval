@@ -1,8 +1,5 @@
-package entities;
+package graphicInterface;
 
 public class AttackBoard extends Board{
 
-	
-	
-	
 }
