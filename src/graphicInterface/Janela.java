@@ -1,30 +1,20 @@
 package graphicInterface;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import entities.AttackBoard;
-import entities.DefenseBoard;
-import entities.Player;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import entities.*;
+import exceptions.InvalidAttackException;
 import exceptions.NotSelectedException;
-import procedures.Check;
-import procedures.TimerAttack;
+import exceptions.OutOfBoundsException;
+import exceptions.ShipUnderOtherShipException;
+import procedures.*;
 
 public class Janela extends JFrame implements ActionListener{
 	private Player p1 = new Player();
 	private Player p2 = new Player();
 	private Check check = new Check();
+	private Ship ship = new Ship();
 	
 	private DefenseBoard defenseBoardP1 = new DefenseBoard();
 	private DefenseBoard defenseBoardP2 = new DefenseBoard();
@@ -75,9 +65,8 @@ public class Janela extends JFrame implements ActionListener{
 	
 	private int numberX;
 	private int numberY;
-	private int length = 1;
-	private String selectedShip="";
 	private TimerAttack timer = new TimerAttack(timerLabel);
+	
 	
 	public Janela() {
 		super("Batalha Naval");
@@ -221,8 +210,8 @@ public class Janela extends JFrame implements ActionListener{
 		
 		numberX = 0;
 		numberY = 0;
-		length = 1;
-		selectedShip="";
+		ship.setLength(1);
+		ship.setSelectedShip("");
 		
 		timerLabel.setText("");
 		timer.resetTimer();
@@ -298,6 +287,7 @@ public class Janela extends JFrame implements ActionListener{
 		panelTitle.removeAll();
 		panelButtons.removeAll();
 		
+		orientationButton.setText("0");
 		titleDefense= new JLabel(p.getName() +" - Coloque seu Barco:");
 		titleDefense.setFont(new Font("Verdana",Font.PLAIN,30));
 		
@@ -336,42 +326,43 @@ public class Janela extends JFrame implements ActionListener{
 	}
 	
 	public void setPositionShip(DefenseBoard defenseBoard) {
+		
 		for(int i =0;i< 10;i++) {
 			for(int j=0;j< 10;j++) {
-				if(orientationButton.getText()=="0") {
-					if(j==numberY && i <= numberX && i > (numberX-length)){ 
+				if(orientationButton.getText()=="0" ) {
+					if(j==numberY && i <= numberX && i > (numberX-ship.getLength())){ 
 						defenseBoard.getGridButton()[i][j].setText("N");
 					}
-					if(selectedShip.equals("PortaAvioes")) {
-						defenseBoard.getGridButton()[numberX-length+1][numberY+1].setText("N");
-						defenseBoard.getGridButton()[numberX-length+1][numberY-1].setText("N");
+					if(ship.getSelectedShip().equals("PortaAvioes")) {
+						defenseBoard.getGridButton()[numberX-ship.getLength()+1][numberY+1].setText("N");
+						defenseBoard.getGridButton()[numberX-ship.getLength()+1][numberY-1].setText("N");
 					}
-				}
+				}else
 				if(orientationButton.getText()=="90") {
-					if(j>=numberY && i == numberX && j < (numberY + length)){ 
+					if(j>=numberY && i == numberX && j < (numberY + ship.getLength())){ 
 						defenseBoard.getGridButton()[i][j].setText("N");
 					}
-					if(selectedShip.equals("PortaAvioes")) {
-						defenseBoard.getGridButton()[numberX+1][numberY+length-1].setText("N");
-						defenseBoard.getGridButton()[numberX-1][numberY+length-1].setText("N");
+					if(ship.getSelectedShip().equals("PortaAvioes")) {
+						defenseBoard.getGridButton()[numberX+1][numberY+ship.getLength()-1].setText("N");
+						defenseBoard.getGridButton()[numberX-1][numberY+ship.getLength()-1].setText("N");
 					}
 				}
 				if(orientationButton.getText()=="180") {
-					if(j==numberY && i >= numberX && i < (numberX+length)){ 
+					if(j==numberY && i >= numberX && i < (numberX+ship.getLength())){ 
 						defenseBoard.getGridButton()[i][j].setText("N");
 					}
-					if(selectedShip.equals("PortaAvioes")) {
-						defenseBoard.getGridButton()[numberX+length-1][numberY+1].setText("N");
-						defenseBoard.getGridButton()[numberX+length-1][numberY-1].setText("N");
+					if(ship.getSelectedShip().equals("PortaAvioes")) {
+						defenseBoard.getGridButton()[numberX+ship.getLength()-1][numberY+1].setText("N");
+						defenseBoard.getGridButton()[numberX+ship.getLength()-1][numberY-1].setText("N");
 					}
 				}
 				if(orientationButton.getText()=="270") {
-					if(j<=numberY && i == numberX && j > (numberY - length)){ 
+					if(j<=numberY && i == numberX && j > (numberY - ship.getLength())){ 
 						defenseBoard.getGridButton()[i][j].setText("N");
 					}
-					if(selectedShip.equals("PortaAvioes")) {
-						defenseBoard.getGridButton()[numberX+1][numberY-length+1].setText("N");
-						defenseBoard.getGridButton()[numberX-1][numberY-length+1].setText("N");
+					if(ship.getSelectedShip().equals("PortaAvioes")) {
+						defenseBoard.getGridButton()[numberX+1][numberY-ship.getLength()+1].setText("N");
+						defenseBoard.getGridButton()[numberX-1][numberY-ship.getLength()+1].setText("N");
 					}
 				}
 			}
@@ -386,6 +377,103 @@ public class Janela extends JFrame implements ActionListener{
 					attackBoard.getGridButton()[i][j].setText("N");
 				}
 			}
+		}
+		
+	}
+	
+	public void defenseBoardAction(DefenseBoard defenseBoard,Player p,int i, int j) throws NotSelectedException, OutOfBoundsException, ShipUnderOtherShipException{
+		NotSelectedException e1 = new NotSelectedException();
+		OutOfBoundsException e2 = new OutOfBoundsException();
+		ShipUnderOtherShipException e3 = new ShipUnderOtherShipException();
+		numberX=i;
+		numberY=j;
+		
+		if(ship.getSelectedShip()=="") {
+			throw e1;
+		}else if(numberX-ship.getLength()+1<0 && orientationButton.getText() == "0"){
+			throw e2;
+		}else if((numberY==9||numberY==0) && orientationButton.getText() == "0" && ship.getSelectedShip() == "PortaAvioes" ) {
+			throw e2;
+		}else if(numberY+ship.getLength()>10 && orientationButton.getText() == "90"){
+			throw e2;
+		}else if((numberX==9||numberX==0) && orientationButton.getText() == "90" && ship.getSelectedShip() == "PortaAvioes" ) {
+			throw e2;
+		}else if(numberX+ship.getLength()>10 && orientationButton.getText() == "180") {
+			throw e2;
+		}else if((numberY==9||numberY==0) && orientationButton.getText() == "180" && ship.getSelectedShip() == "PortaAvioes") {
+			throw e2;
+		}else if(numberY-ship.getLength()+1<0 && orientationButton.getText() == "270") {
+			throw e2;
+		}else if((numberX==9||numberX==0) && orientationButton.getText() == "270" && ship.getSelectedShip() == "PortaAvioes" ) {
+			throw e2;
+		}else if(check.checkDefenseBoard(ship, defenseBoard, orientationButton, numberX, numberY)==false){
+			throw e3;
+		}else {
+			setPositionShip(defenseBoard);
+			p.setTries(p.getTries()-1);
+		}
+		
+	}
+	
+	public void attackBoardAction(AttackBoard attackBoard,DefenseBoard defenseBoard,Player p,int i, int j) throws InvalidAttackException{
+		InvalidAttackException e1 = new InvalidAttackException();
+		numberX=i;
+		numberY=j;
+		
+		if(check.checkAttackBoard(attackBoard, i, j)==false) {
+			throw e1;
+		}else {
+			setAttack(attackBoard);
+			check.checkRight(defenseBoard, p,numberX,numberY);
+			check.checkVictory(defenseBoard, attackBoard, p);
+			p.setAttackTries(p.getAttackTries()-1);
+		}
+		
+	}
+	
+	public void switchColorShipButtons() {
+		if(ship.getSelectedShip() =="Ship1") {
+			ship1Button.setBackground(new Color(0,255,0));
+		}else {
+			ship1Button.setBackground(new Color(255,255,255));
+		}
+		if(ship.getSelectedShip() =="Ship2") {
+			ship2Button.setBackground(new Color(0,255,0));
+		}else {
+			ship2Button.setBackground(new Color(255,255,255));
+		}
+		if(ship.getSelectedShip() =="Ship3") {
+			ship3Button.setBackground(new Color(0,255,0));
+		}else {
+			ship3Button.setBackground(new Color(255,255,255));
+		}
+		if(ship.getSelectedShip() =="Ship4") {
+			ship4Button.setBackground(new Color(0,255,0));
+		}else {
+			ship4Button.setBackground(new Color(255,255,255));
+		}
+		if(ship.getSelectedShip() =="PortaAvioes") {
+			portaAvioesButton.setBackground(new Color(0,255,0));
+		}else {
+			portaAvioesButton.setBackground(new Color(255,255,255));
+		}
+	}
+
+	public void setOptionsShips() {
+		if(optionShip1.isSelected()) {
+			this.ship1Button.setVisible(false);
+		}
+		if(optionShip2.isSelected()) {
+			this.ship2Button.setVisible(false);
+		}
+		if(optionShip3.isSelected()) {
+			this.ship3Button.setVisible(false);
+		}
+		if(optionShip4.isSelected()) {
+			this.ship4Button.setVisible(false);
+		}
+		if(optionPortaAvioes.isSelected()) {
+			this.portaAvioesButton.setVisible(false);
 		}
 		
 	}
@@ -445,21 +533,7 @@ public class Janela extends JFrame implements ActionListener{
 			requestShips();
 		}
 		
-		if(optionShip1.isSelected()) {
-			this.ship1Button.setVisible(false);
-		}
-		if(optionShip2.isSelected()) {
-			this.ship2Button.setVisible(false);
-		}
-		if(optionShip3.isSelected()) {
-			this.ship3Button.setVisible(false);
-		}
-		if(optionShip4.isSelected()) {
-			this.ship4Button.setVisible(false);
-		}
-		if(optionPortaAvioes.isSelected()) {
-			this.portaAvioesButton.setVisible(false);
-		}
+		setOptionsShips();
 		
 		if(e.getSource()== saveButtonCustom) {
 			p1.setTries(Integer.parseInt(quantField.getText()));
@@ -479,70 +553,48 @@ public class Janela extends JFrame implements ActionListener{
 		}
 		
 		if(e.getSource()==ship1Button ) {
-			this.selectedShip="Ship1";
-			this.length= 1;
+			ship.setSelectedShip("Ship1");
+			ship.setLength(1);
 		}else if(e.getSource()== ship2Button) {
-			this.selectedShip="Ship2";
-			this.length = 2;
+			ship.setSelectedShip("Ship2");
+			ship.setLength(2);
 		}else if(e.getSource()== ship3Button) {
-			this.selectedShip="Ship3";
-			this.length = 3;
+			ship.setSelectedShip("Ship3");
+			ship.setLength(3);
 		}else if(e.getSource()== ship4Button) {
-			this.selectedShip="Ship4";
-			this.length = 4;
+			ship.setSelectedShip("Ship4");
+			ship.setLength(4);
 		}else if(e.getSource()== portaAvioesButton) {
-			this.selectedShip="PortaAvioes";
-			this.length = 3;
+			ship.setSelectedShip("PortaAvioes");
+			ship.setLength(3);
 		}
 		
 		if(e.getSource()==orientationButton) {
-			if(orientationButton.getText().equals("0")) {
+			if(orientationButton.getText()=="0") {
 				orientationButton.setText("90");
-			}else if(orientationButton.getText().equals("90")) {
+			}else if(orientationButton.getText()=="90") {
 				orientationButton.setText("180");
-			}else if(orientationButton.getText().equals("180")) {
+			}else if(orientationButton.getText()=="180") {
 				orientationButton.setText("270");
-			}else if(orientationButton.getText().equals("270")) {
+			}else if(orientationButton.getText()=="270") {
 				orientationButton.setText("0");
 			}
+			
 		}
 		
-		if(selectedShip =="Ship1") {
-			ship1Button.setBackground(new Color(0,255,0));
-		}else {
-			ship1Button.setBackground(new Color(255,255,255));
-		}
-		if(selectedShip =="Ship2") {
-			ship2Button.setBackground(new Color(0,255,0));
-		}else {
-			ship2Button.setBackground(new Color(255,255,255));
-		}
-		if(selectedShip =="Ship3") {
-			ship3Button.setBackground(new Color(0,255,0));
-		}else {
-			ship3Button.setBackground(new Color(255,255,255));
-		}
-		if(selectedShip =="Ship4") {
-			ship4Button.setBackground(new Color(0,255,0));
-		}else {
-			ship4Button.setBackground(new Color(255,255,255));
-		}
-		if(selectedShip =="PortaAvioes") {
-			portaAvioesButton.setBackground(new Color(0,255,0));
-		}else {
-			portaAvioesButton.setBackground(new Color(255,255,255));
-		}
+		switchColorShipButtons();
 		
 		for(int i=0; i<10;i++) {
 			for(int j=0; j<10 ; j++) {
 				if(e.getSource()==defenseBoardP1.getGridButton()[i][j]) {
-					if(selectedShip=="") {
-						JOptionPane.showMessageDialog(null, "Primeiro selecione o navio");
-					}else {
-						numberX=i;
-						numberY=j;
-						setPositionShip(defenseBoardP1);
-						p1.setTries(p1.getTries()-1);
+					try {
+						defenseBoardAction(defenseBoardP1,p1,i, j);
+					} catch (NotSelectedException e1) {
+						JOptionPane.showMessageDialog(null,"Selecione primeiro o navio desejado");
+					} catch (OutOfBoundsException e2) {
+						JOptionPane.showMessageDialog(null,"O navio fica fora da grelha, tente novamente");
+					} catch (ShipUnderOtherShipException e3) {
+						JOptionPane.showMessageDialog(null,"O navio fica por cima de outro, tente novamente");
 					}
 				}
 			}
@@ -552,7 +604,7 @@ public class Janela extends JFrame implements ActionListener{
 			panelBoard.setVisible(false);
 			panelButtons.setVisible(false);
 			panelName.setVisible(true);
-			selectedShip="";
+			ship.setSelectedShip("");
 			nameField.setText("");
 			requestName(saveButtonP2);
 			p1.setTries(p1.getTries()+1);
@@ -570,13 +622,14 @@ public class Janela extends JFrame implements ActionListener{
 		for(int i=0; i<10;i++) {
 			for(int j=0; j<10 ; j++) {
 				if(e.getSource()==defenseBoardP2.getGridButton()[i][j]) {
-					if(selectedShip=="") {
-						JOptionPane.showMessageDialog(null,"Selecione primeiro o barco desejado");
-					}else {
-						numberX=i;
-						numberY=j;
-						setPositionShip(defenseBoardP2);
-						p2.setTries(p2.getTries()-1);
+					try {
+						defenseBoardAction(defenseBoardP2,p2,i, j);
+					} catch (NotSelectedException e1) {
+						JOptionPane.showMessageDialog(null,"Selecione primeiro o navio desejado");
+					} catch (OutOfBoundsException e2) {
+						JOptionPane.showMessageDialog(null,"O navio fica fora da grelha, tente novamente");
+					}catch (ShipUnderOtherShipException e3) {
+						JOptionPane.showMessageDialog(null,"O navio fica por cima de outro, tente novamente");
 					}
 				}
 			}
@@ -600,27 +653,27 @@ public class Janela extends JFrame implements ActionListener{
 		for(int i=0; i<10;i++) {
 			for(int j=0; j<10 ; j++) {
 				if(e.getSource()==attackBoardP1.getGridButton()[i][j]) {
-					numberX=i;
-					numberY=j;
-					setAttack(attackBoardP1);
-					check.checkRight(defenseBoardP2, p1,numberX,numberY);
-					check.checkVictory(defenseBoardP2, attackBoardP1, p1);
-					p1.setAttackTries(p1.getAttackTries()-1);
-					if (p1.isVictory()==true) {
-						timer.pauseP1();
-						p1.putOnRecords(timerLabel);
-						JOptionPane.showMessageDialog(null,"Parabéns "+ p1.getName() +" - Você venceu a partida");
-						createPanelInitial();
-						panelBoard.setVisible(false);
-						panelTitle.removeAll();
-						panelTitle.setVisible(false);
-						panelTitle.add(titleInitial);
-						panelTitle.setVisible(true);
-						reset();
-						createPanelInitial();
-						panelInitial.setVisible(true);
-						break first;
+					try {
+						attackBoardAction(attackBoardP1, defenseBoardP2, p1, i, j);
+						if (p1.isVictory()==true) {
+							timer.pauseP1();
+							p1.putOnRecords(timerLabel);
+							JOptionPane.showMessageDialog(null,"Parabéns "+ p1.getName() +" - Você venceu a partida");
+							createPanelInitial();
+							panelBoard.setVisible(false);
+							panelTitle.removeAll();
+							panelTitle.setVisible(false);
+							panelTitle.add(titleInitial);
+							panelTitle.setVisible(true);
+							reset();
+							createPanelInitial();
+							panelInitial.setVisible(true);
+							break first;
+						}
+					} catch (InvalidAttackException e1) {
+						JOptionPane.showMessageDialog(null,"Esse ataque já foi feito antes, tente novamente");
 					}
+					
 				}
 			}
 		}
@@ -643,27 +696,26 @@ public class Janela extends JFrame implements ActionListener{
 		for(int i=0; i<10;i++) {
 			for(int j=0; j<10 ; j++) {
 				if(e.getSource()==attackBoardP2.getGridButton()[i][j]) {
-					numberX=i;
-					numberY=j;
-					setAttack(attackBoardP2);
-					check.checkRight(defenseBoardP1, p2,numberX,numberY);
-					check.checkVictory(defenseBoardP1, attackBoardP2, p2);
-					p2.setAttackTries(p2.getAttackTries()-1);
-					if(p2.isVictory()==true) {
-						timer.pauseP2();
-						p2.putOnRecords(timerLabel);
-						
-						JOptionPane.showMessageDialog(null,"Parabéns "+ p2.getName() +" - Você venceu a partida");
-						panelBoard.setVisible(false);
-						panelTitle.removeAll();
-						panelTitle.setVisible(false);
-						panelTitle.add(titleInitial);
-						panelTitle.setVisible(true);
-						reset();
-						createPanelInitial();
-						panelInitial.setVisible(true);
-						break second;
+					try {
+						attackBoardAction(attackBoardP2, defenseBoardP1, p2, i, j);
+						if(p2.isVictory()==true) {
+							timer.pauseP2();
+							p2.putOnRecords(timerLabel);
+							JOptionPane.showMessageDialog(null,"Parabéns "+ p2.getName() +" - Você venceu a partida");
+							panelBoard.setVisible(false);
+							panelTitle.removeAll();
+							panelTitle.setVisible(false);
+							panelTitle.add(titleInitial);
+							panelTitle.setVisible(true);
+							reset();
+							createPanelInitial();
+							panelInitial.setVisible(true);
+							break second;
+						}
+					} catch (InvalidAttackException e1) {
+						JOptionPane.showMessageDialog(null,"Esse ataque já foi feito antes, tente novamente");
 					}
+					
 				}
 			}
 		}

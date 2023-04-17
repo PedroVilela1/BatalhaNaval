@@ -1,10 +1,12 @@
 package procedures;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import entities.AttackBoard;
 import entities.DefenseBoard;
 import entities.Player;
+import entities.Ship;
 
 public class Check {
 	public void checkVictory(DefenseBoard defenseBoard,AttackBoard attackBoard,Player p) {
@@ -50,4 +52,92 @@ public class Check {
 		}
 		
 	}
+	
+	public boolean checkDefenseBoard(Ship ship,DefenseBoard defenseBoard,JButton orientationButton,int numberX,int numberY) {
+		boolean response = true;
+		if(orientationButton.getText()=="0") {
+			if(ship.getLength()==1) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"){
+					response = false;
+				}
+			}else if(ship.getLength()==2) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-1][numberY].getText()=="N") {
+					response = false;
+				}
+			}else if(ship.getLength()==3) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-1][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-2][numberY].getText()=="N") {
+					response = false;
+				}
+			}else if(ship.getLength()==4) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-1][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-2][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-3][numberY].getText()=="N") {
+					response = false;
+				}
+			}
+		}else if(orientationButton.getText()=="90") {
+			if(ship.getLength()==1) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"){
+					response = false;
+				}
+			}else if(ship.getLength()==2) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+1].getText()=="N") {
+					response = false;
+				}
+			}else if(ship.getLength()==3) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+1].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+2].getText()=="N") {
+					response = false;
+				}
+			}else if(ship.getLength()==4) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+1].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+2].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+3].getText()=="N") {
+					response = false;
+				}
+			}
+		}else if(orientationButton.getText()=="180") {
+			if(ship.getLength()==1) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"){
+					response = false;
+				}
+			}else if(ship.getLength()==2) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+1][numberY].getText()=="N") {
+					response = false;
+				}
+			}else if(ship.getLength()==3) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+1][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+2][numberY].getText()=="N") {
+					response = false;
+				}
+			}else if(ship.getLength()==4) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+1][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+2][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+3][numberY].getText()=="N") {
+					response = false;
+				}
+			}
+		}else if(orientationButton.getText()=="270") {
+			if(ship.getLength()==1) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"){
+					response = false;
+				}
+			}else if(ship.getLength()==2) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-1].getText()=="N") {
+					response = false;
+				}
+			}else if(ship.getLength()==3) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-1].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-2].getText()=="N") {
+					response = false;
+				}
+			}else if(ship.getLength()==4) {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-1].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-2].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-3].getText()=="N") {
+					response = false;
+				}
+			}
+		}
+			return response;
+			
+	}
+	
+	public boolean checkAttackBoard(AttackBoard attackBoard,int numberX,int numberY) {
+		boolean response=true;
+		if(attackBoard.getGridButton()[numberX][numberY].getText()=="N"){
+			response = false;
+		}
+		return response;
+	}
+
 }
