@@ -67,7 +67,6 @@ public class Janela extends JFrame implements ActionListener{
 	private int numberY;
 	private TimerAttack timer = new TimerAttack(timerLabel);
 	
-	
 	public Janela() {
 		super("Batalha Naval");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,7 +93,6 @@ public class Janela extends JFrame implements ActionListener{
 		
 		exitButton = new JButton("Sair");
 		exitButton.setFont(new Font("Verdana",Font.PLAIN,35));
-		
 		
 		newGameButton.addActionListener(this);
 		instructionButton.addActionListener(this);
@@ -215,10 +213,12 @@ public class Janela extends JFrame implements ActionListener{
 		
 		timerLabel.setText("");
 		timer.resetTimer();
+		
 	}
 	
 	public void requestShips() {
 		panelTitle.removeAll();
+		
 		JLabel quantShips = new JLabel("Digite quantos navios poderão ser colocados: ");
 		quantShips.setFont(new Font("Verdana",Font.PLAIN,20));
 		
@@ -226,9 +226,8 @@ public class Janela extends JFrame implements ActionListener{
 		takeOffShips.setFont(new Font("Verdana",Font.PLAIN,17));
 		
 		p1.setTries(Integer.parseInt(quantField.getText()));
-		p2.setTries(Integer.parseInt(quantField.getText()));
+		p2.setTries(p1.getTries());
 		
-		ship1Button.setBackground(new Color(0,255,0));
 		optionShip1.addActionListener(this);
 		optionShip2.addActionListener(this);
 		optionShip3.addActionListener(this);
@@ -288,6 +287,8 @@ public class Janela extends JFrame implements ActionListener{
 		panelButtons.removeAll();
 		
 		orientationButton.setText("0");
+		orientationButton.setBackground(new Color(255,255,255));
+		
 		titleDefense= new JLabel(p.getName() +" - Coloque seu Barco:");
 		titleDefense.setFont(new Font("Verdana",Font.PLAIN,30));
 		
@@ -326,7 +327,6 @@ public class Janela extends JFrame implements ActionListener{
 	}
 	
 	public void setPositionShip(DefenseBoard defenseBoard) {
-		
 		for(int i =0;i< 10;i++) {
 			for(int j=0;j< 10;j++) {
 				if(orientationButton.getText()=="0" ) {
@@ -337,7 +337,7 @@ public class Janela extends JFrame implements ActionListener{
 						defenseBoard.getGridButton()[numberX-ship.getLength()+1][numberY+1].setText("N");
 						defenseBoard.getGridButton()[numberX-ship.getLength()+1][numberY-1].setText("N");
 					}
-				}else
+				}
 				if(orientationButton.getText()=="90") {
 					if(j>=numberY && i == numberX && j < (numberY + ship.getLength())){ 
 						defenseBoard.getGridButton()[i][j].setText("N");
@@ -415,7 +415,7 @@ public class Janela extends JFrame implements ActionListener{
 		
 	}
 	
-	public void attackBoardAction(AttackBoard attackBoard,DefenseBoard defenseBoard,Player p,int i, int j) throws InvalidAttackException{
+	public void attackBoardAction(AttackBoard attackBoard, DefenseBoard defenseBoard, Player p, int i, int j) throws InvalidAttackException{
 		InvalidAttackException e1 = new InvalidAttackException();
 		numberX=i;
 		numberY=j;
@@ -424,7 +424,7 @@ public class Janela extends JFrame implements ActionListener{
 			throw e1;
 		}else {
 			setAttack(attackBoard);
-			check.checkRight(defenseBoard, p,numberX,numberY);
+			check.checkRight(defenseBoard, p, numberX, numberY);
 			check.checkVictory(defenseBoard, attackBoard, p);
 			p.setAttackTries(p.getAttackTries()-1);
 		}
@@ -437,41 +437,50 @@ public class Janela extends JFrame implements ActionListener{
 		}else {
 			ship1Button.setBackground(new Color(255,255,255));
 		}
+		
 		if(ship.getSelectedShip() =="Ship2") {
 			ship2Button.setBackground(new Color(0,255,0));
 		}else {
 			ship2Button.setBackground(new Color(255,255,255));
 		}
+		
 		if(ship.getSelectedShip() =="Ship3") {
 			ship3Button.setBackground(new Color(0,255,0));
 		}else {
 			ship3Button.setBackground(new Color(255,255,255));
 		}
+		
 		if(ship.getSelectedShip() =="Ship4") {
 			ship4Button.setBackground(new Color(0,255,0));
 		}else {
 			ship4Button.setBackground(new Color(255,255,255));
 		}
+		
 		if(ship.getSelectedShip() =="PortaAvioes") {
 			portaAvioesButton.setBackground(new Color(0,255,0));
 		}else {
 			portaAvioesButton.setBackground(new Color(255,255,255));
 		}
+		
 	}
 
 	public void setOptionsShips() {
 		if(optionShip1.isSelected()) {
 			this.ship1Button.setVisible(false);
 		}
+		
 		if(optionShip2.isSelected()) {
 			this.ship2Button.setVisible(false);
 		}
+		
 		if(optionShip3.isSelected()) {
 			this.ship3Button.setVisible(false);
 		}
+		
 		if(optionShip4.isSelected()) {
 			this.ship4Button.setVisible(false);
 		}
+		
 		if(optionPortaAvioes.isSelected()) {
 			this.portaAvioesButton.setVisible(false);
 		}
@@ -518,7 +527,8 @@ public class Janela extends JFrame implements ActionListener{
 			+ "\r\n"
 			+ "");
 		}else if(e.getSource() == recordeButton) {
-			JOptionPane.showMessageDialog(null, p1.readRecord());
+			JOptionPane.showMessageDialog(null, "Top 10 : \n" + p1.treatRecords());
+			
 		}else if(e.getSource() == exitButton) {
 			System.exit(0);
 		}
@@ -736,6 +746,3 @@ public class Janela extends JFrame implements ActionListener{
 		
 	}
 }
-	
-	
-
