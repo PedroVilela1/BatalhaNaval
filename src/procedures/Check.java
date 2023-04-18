@@ -55,7 +55,7 @@ public class Check {
 	
 	public boolean checkDefenseBoard(Ship ship,DefenseBoard defenseBoard,JButton orientationButton,int numberX,int numberY) {
 		boolean response = true;
-		if(orientationButton.getText()=="0") {
+		if(orientationButton.getText()=="↑") {
 			if(ship.getLength()==1) {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"){
 					response = false;
@@ -73,7 +73,7 @@ public class Check {
 					response = false;
 				}
 			}
-		}else if(orientationButton.getText()=="90") {
+		}else if(orientationButton.getText()=="→") {
 			if(ship.getLength()==1) {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"){
 					response = false;
@@ -91,7 +91,7 @@ public class Check {
 					response = false;
 				}
 			}
-		}else if(orientationButton.getText()=="180") {
+		}else if(orientationButton.getText()=="↓") {
 			if(ship.getLength()==1) {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"){
 					response = false;
@@ -109,7 +109,7 @@ public class Check {
 					response = false;
 				}
 			}
-		}else if(orientationButton.getText()=="270") {
+		}else if(orientationButton.getText()=="←") {
 			if(ship.getLength()==1) {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"){
 					response = false;

@@ -16,6 +16,13 @@ public class Janela extends JFrame implements ActionListener{
 	private Check check = new Check();
 	private Ship ship = new Ship();
 	
+	JMenuBar menuBar = new JMenuBar();
+	
+	JMenuItem homeMenu = new JMenuItem("Home");
+    JMenuItem recordMenu = new JMenuItem("Recorde");
+    JMenuItem exitMenu = new JMenuItem("Sair");
+    JMenuItem instructionMenu = new JMenuItem("Instruções");
+	
 	private DefenseBoard defenseBoardP1 = new DefenseBoard();
 	private DefenseBoard defenseBoardP2 = new DefenseBoard();
 	private AttackBoard attackBoardP1 = new AttackBoard();
@@ -26,7 +33,7 @@ public class Janela extends JFrame implements ActionListener{
 	private JPanel panelGameMode = new JPanel(new FlowLayout());
 	private JPanel panelCustom = new JPanel(new FlowLayout());
 	private JPanel panelName = new JPanel(new FlowLayout());
-	private JPanel panelBoard= new JPanel(new GridLayout(10,10));
+	private JPanel panelBoard= new JPanel(new GridLayout(11,11));
 	private JPanel panelButtons = new JPanel(new GridLayout(6,1));
 	
 	private JLabel titleInitial;
@@ -52,7 +59,7 @@ public class Janela extends JFrame implements ActionListener{
 	private JButton ship3Button = new JButton("Ship3");
 	private JButton ship4Button = new JButton("Ship4"); 
 	private JButton portaAvioesButton = new JButton("PortaAvioes");
-	private JButton orientationButton = new JButton("0");
+	private JButton orientationButton = new JButton("↑");
 	
 	private JTextField quantField = new JTextField("4",10);
 	private JTextField nameField = new JTextField(13);
@@ -70,20 +77,39 @@ public class Janela extends JFrame implements ActionListener{
 	public Janela() {
 		super("Batalha Naval");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(700,500);
+		setSize(1024,720);
 		setVisible(true);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		createPanelInitial();
+		createMenu();
 		timer.start();
 	}
 	
+	public void createMenu() {
+		homeMenu.addActionListener(this);
+		instructionMenu.addActionListener(this);
+		recordMenu.addActionListener(this);
+		exitMenu.addActionListener(this);
+		
+        menuBar.add(homeMenu);
+        menuBar.add(instructionMenu);
+        menuBar.add(recordMenu);
+        menuBar.add(exitMenu);
+        
+        setJMenuBar(menuBar);
+        
+	}
+	
 	public void createPanelInitial() {
+		menuBar.setVisible(false);
+		
 		titleInitial = new JLabel("Batalha Naval");
 		titleInitial.setFont(new Font("Verdana",Font.PLAIN,60));
 		
 		newGameButton = new JButton("Novo Jogo");
 		newGameButton.setFont(new Font("Verdana",Font.PLAIN,35));
+		newGameButton.setSize(100, 50);
 		
 		instructionButton = new JButton("Instruções");
 		instructionButton.setFont(new Font("Verdana",Font.PLAIN,35));
@@ -190,21 +216,31 @@ public class Janela extends JFrame implements ActionListener{
 		saveButtonP1.removeActionListener(this);
 		saveButtonP2.removeActionListener(this);
 		ship1Button.removeActionListener(this);
+		ship1Button.setVisible(true);
 		ship2Button.removeActionListener(this);
+		ship2Button.setVisible(true);
 		ship3Button.removeActionListener(this);
+		ship3Button.setVisible(true);
 		ship4Button.removeActionListener(this);
+		ship4Button.setVisible(true);
 		portaAvioesButton.removeActionListener(this);
+		portaAvioesButton.setVisible(true);
 		orientationButton.removeActionListener(this);
 		
-		orientationButton.setText("0");
+		orientationButton.setText("↑");
 		quantField.setText("4");
 		nameField.setText("");
 
 		optionShip1.removeActionListener(this);
+		optionShip1.setSelected(false);
 		optionShip2.removeActionListener(this);
+		optionShip2.setSelected(false);
 		optionShip3.removeActionListener(this);
+		optionShip3.setSelected(false);
 		optionShip4.removeActionListener(this);
+		optionShip4.setSelected(false);
 		optionPortaAvioes.removeActionListener(this);
+		optionPortaAvioes.setSelected(false);
 		
 		numberX = 0;
 		numberY = 0;
@@ -224,9 +260,6 @@ public class Janela extends JFrame implements ActionListener{
 		
 		JLabel takeOffShips = new JLabel("Selecione os Navios que quiser retirar");
 		takeOffShips.setFont(new Font("Verdana",Font.PLAIN,17));
-		
-		p1.setTries(Integer.parseInt(quantField.getText()));
-		p2.setTries(p1.getTries());
 		
 		optionShip1.addActionListener(this);
 		optionShip2.addActionListener(this);
@@ -252,14 +285,125 @@ public class Janela extends JFrame implements ActionListener{
 	
 	public void configBoard(DefenseBoard defenseBoard) {
 		panelBoard.removeAll();
+		JLabel letterBlank = new JLabel("-");
+		letterBlank.setFont(new Font("Verdana",Font.PLAIN,20));
+		letterBlank.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letterBlank);
+	
+		JLabel letter1 = new JLabel("1");
+		letter1.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter1.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter1);
+	
+		JLabel letter2 = new JLabel("2");
+		letter2.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter2.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter2);
+	
+	
+		JLabel letter3 = new JLabel("3");
+		letter3.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter3.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter3);
+	
+	
+		JLabel letter4 = new JLabel("4");
+		letter4.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter4.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter4);
+	
+		
+		JLabel letter5 = new JLabel("5");
+		letter5.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter5.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter5);
+	
+		JLabel letter6 = new JLabel("6");
+		letter6.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter6.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter6);
+	
+		JLabel letter7 = new JLabel("7");
+		letter7.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter7.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter7);
+	
+		JLabel letter8 = new JLabel("8");
+		letter8.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter8.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter8);
+	
+		JLabel letter9 = new JLabel("9");
+		letter9.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter9.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter9);
+	
+		JLabel letter10 = new JLabel("10");
+		letter10.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter10.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter10);
 		
 		for(int i=0; i<10;i++) {
 			for(int j=0; j<10 ; j++) {
+				if(j==0) {
+					if(i==0) {
+						JLabel letter = new JLabel("A");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==1) {
+						JLabel letter = new JLabel("B");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==2) {
+						JLabel letter = new JLabel("C");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==3) {
+						JLabel letter = new JLabel("D");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==4) {
+						JLabel letter = new JLabel("E");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==5) {
+						JLabel letter = new JLabel("F");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==6) {
+						JLabel letter = new JLabel("G");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==7) {
+						JLabel letter = new JLabel("H");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==8) {
+						JLabel letter = new JLabel("I");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==9) {
+						JLabel letter = new JLabel("J");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+						
+					}
+				}
 				defenseBoard.getGridButton()[i][j].addActionListener(this);
 				panelBoard.add(defenseBoard.getGridButton()[i][j]);
 			}
 		}
-		
+			
 	}
 	
 	public void configBoard(AttackBoard attackBoard) {
@@ -273,9 +417,120 @@ public class Janela extends JFrame implements ActionListener{
 	
 	public void addBoard(AttackBoard attackBoard) {
 		panelBoard.removeAll();
+		JLabel letterBlank = new JLabel("-");
+		letterBlank.setFont(new Font("Verdana",Font.PLAIN,20));
+		letterBlank.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letterBlank);
+	
+		JLabel letter1 = new JLabel("1");
+		letter1.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter1.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter1);
+	
+		JLabel letter2 = new JLabel("2");
+		letter2.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter2.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter2);
+	
+	
+		JLabel letter3 = new JLabel("3");
+		letter3.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter3.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter3);
+	
+	
+		JLabel letter4 = new JLabel("4");
+		letter4.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter4.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter4);
+	
+		
+		JLabel letter5 = new JLabel("5");
+		letter5.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter5.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter5);
+	
+		JLabel letter6 = new JLabel("6");
+		letter6.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter6.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter6);
+	
+		JLabel letter7 = new JLabel("7");
+		letter7.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter7.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter7);
+	
+		JLabel letter8 = new JLabel("8");
+		letter8.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter8.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter8);
+	
+		JLabel letter9 = new JLabel("9");
+		letter9.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter9.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter9);
+	
+		JLabel letter10 = new JLabel("10");
+		letter10.setFont(new Font("Verdana",Font.PLAIN,20));
+		letter10.setHorizontalAlignment(JLabel.CENTER);
+		panelBoard.add(letter10);
 		
 		for(int i=0; i<10;i++) {
 			for(int j=0; j<10 ; j++) {
+				if(j==0) {
+					if(i==0) {
+						JLabel letter = new JLabel("A");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==1) {
+						JLabel letter = new JLabel("B");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==2) {
+						JLabel letter = new JLabel("C");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==3) {
+						JLabel letter = new JLabel("D");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==4) {
+						JLabel letter = new JLabel("E");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==5) {
+						JLabel letter = new JLabel("F");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==6) {
+						JLabel letter = new JLabel("G");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==7) {
+						JLabel letter = new JLabel("H");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==8) {
+						JLabel letter = new JLabel("I");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+					}else if(i==9) {
+						JLabel letter = new JLabel("J");
+						letter.setFont(new Font("Verdana",Font.PLAIN,20));
+						letter.setHorizontalAlignment(JLabel.CENTER);
+						panelBoard.add(letter);
+						
+					}
+				}
 				panelBoard.add(attackBoard.getGridButton()[i][j]);
 			}
 		}
@@ -283,14 +538,16 @@ public class Janela extends JFrame implements ActionListener{
 	}
 	
 	public void createPanelDefense(Player p) {
-		panelTitle.removeAll();
-		panelButtons.removeAll();
+		this.panelTitle.removeAll();
+		this.panelButtons.removeAll();
+		this.orientationButton.removeActionListener(this);
 		
-		orientationButton.setText("0");
-		orientationButton.setBackground(new Color(255,255,255));
+		this.orientationButton.setText("↑");
+		this.orientationButton.setBackground(new Color(255,255,255));
+		this.orientationButton.setFont(new Font("cascadia",Font.PLAIN,50));
 		
-		titleDefense= new JLabel(p.getName() +" - Coloque seu Barco:");
-		titleDefense.setFont(new Font("Verdana",Font.PLAIN,30));
+		this.titleDefense= new JLabel(p.getName() +" - Coloque seu Barco:");
+		this.titleDefense.setFont(new Font("Verdana",Font.PLAIN,30));
 		
 		ship1Button.addActionListener(this);
 		ship2Button.addActionListener(this);
@@ -329,7 +586,7 @@ public class Janela extends JFrame implements ActionListener{
 	public void setPositionShip(DefenseBoard defenseBoard) {
 		for(int i =0;i< 10;i++) {
 			for(int j=0;j< 10;j++) {
-				if(orientationButton.getText()=="0" ) {
+				if(orientationButton.getText()=="↑" ) {
 					if(j==numberY && i <= numberX && i > (numberX-ship.getLength())){ 
 						defenseBoard.getGridButton()[i][j].setText("N");
 					}
@@ -338,7 +595,7 @@ public class Janela extends JFrame implements ActionListener{
 						defenseBoard.getGridButton()[numberX-ship.getLength()+1][numberY-1].setText("N");
 					}
 				}
-				if(orientationButton.getText()=="90") {
+				if(orientationButton.getText()=="→") {
 					if(j>=numberY && i == numberX && j < (numberY + ship.getLength())){ 
 						defenseBoard.getGridButton()[i][j].setText("N");
 					}
@@ -347,7 +604,7 @@ public class Janela extends JFrame implements ActionListener{
 						defenseBoard.getGridButton()[numberX-1][numberY+ship.getLength()-1].setText("N");
 					}
 				}
-				if(orientationButton.getText()=="180") {
+				if(orientationButton.getText()=="↓") {
 					if(j==numberY && i >= numberX && i < (numberX+ship.getLength())){ 
 						defenseBoard.getGridButton()[i][j].setText("N");
 					}
@@ -356,7 +613,7 @@ public class Janela extends JFrame implements ActionListener{
 						defenseBoard.getGridButton()[numberX+ship.getLength()-1][numberY-1].setText("N");
 					}
 				}
-				if(orientationButton.getText()=="270") {
+				if(orientationButton.getText()=="←") {
 					if(j<=numberY && i == numberX && j > (numberY - ship.getLength())){ 
 						defenseBoard.getGridButton()[i][j].setText("N");
 					}
@@ -390,21 +647,21 @@ public class Janela extends JFrame implements ActionListener{
 		
 		if(ship.getSelectedShip()=="") {
 			throw e1;
-		}else if(numberX-ship.getLength()+1<0 && orientationButton.getText() == "0"){
+		}else if(numberX-ship.getLength()+1<0 && orientationButton.getText() == "↑"){
 			throw e2;
-		}else if((numberY==9||numberY==0) && orientationButton.getText() == "0" && ship.getSelectedShip() == "PortaAvioes" ) {
+		}else if((numberY==9||numberY==0) && orientationButton.getText() == "↑" && ship.getSelectedShip() == "PortaAvioes" ) {
 			throw e2;
-		}else if(numberY+ship.getLength()>10 && orientationButton.getText() == "90"){
+		}else if(numberY+ship.getLength()>10 && orientationButton.getText() == "→"){
 			throw e2;
-		}else if((numberX==9||numberX==0) && orientationButton.getText() == "90" && ship.getSelectedShip() == "PortaAvioes" ) {
+		}else if((numberX==9||numberX==0) && orientationButton.getText() == "→" && ship.getSelectedShip() == "PortaAvioes" ) {
 			throw e2;
-		}else if(numberX+ship.getLength()>10 && orientationButton.getText() == "180") {
+		}else if(numberX+ship.getLength()>10 && orientationButton.getText() == "↓") {
 			throw e2;
-		}else if((numberY==9||numberY==0) && orientationButton.getText() == "180" && ship.getSelectedShip() == "PortaAvioes") {
+		}else if((numberY==9||numberY==0) && orientationButton.getText() == "↓" && ship.getSelectedShip() == "PortaAvioes") {
 			throw e2;
-		}else if(numberY-ship.getLength()+1<0 && orientationButton.getText() == "270") {
+		}else if(numberY-ship.getLength()+1<0 && orientationButton.getText() == "←") {
 			throw e2;
-		}else if((numberX==9||numberX==0) && orientationButton.getText() == "270" && ship.getSelectedShip() == "PortaAvioes" ) {
+		}else if((numberX==9||numberX==0) && orientationButton.getText() == "←" && ship.getSelectedShip() == "PortaAvioes" ) {
 			throw e2;
 		}else if(check.checkDefenseBoard(ship, defenseBoard, orientationButton, numberX, numberY)==false){
 			throw e3;
@@ -490,6 +747,7 @@ public class Janela extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == newGameButton ) {
+			menuBar.setVisible(true);
 			panelInitial.setVisible(false);
 			createPanelGameMode();
 			panelGameMode.setVisible(true);
@@ -528,7 +786,6 @@ public class Janela extends JFrame implements ActionListener{
 			+ "");
 		}else if(e.getSource() == recordeButton) {
 			JOptionPane.showMessageDialog(null, "Top 10 : \n" + p1.treatRecords());
-			
 		}else if(e.getSource() == exitButton) {
 			System.exit(0);
 		}
@@ -543,10 +800,63 @@ public class Janela extends JFrame implements ActionListener{
 			requestShips();
 		}
 		
+		if(e.getSource()==homeMenu) {
+			panelBoard.setVisible(false);
+			panelTitle.removeAll();
+			panelTitle.setVisible(false);
+			panelGameMode.setVisible(false);
+			panelButtons.setVisible(false);
+			panelCustom.setVisible(false);
+			panelName.setVisible(false);
+			panelTitle.add(titleInitial);
+			panelTitle.setVisible(true);
+			reset();
+			createPanelInitial();
+			panelInitial.setVisible(true);
+		}else if(e.getSource()==instructionMenu){
+			JOptionPane.showMessageDialog(null, "Instruções (2 jogadores):\r\n"
+					+ "\r\n"
+					+ "Ambos os jogadores colocam os\r\n"
+					+ "Seus navios na grelha de Defesa\r\n"
+					+ "\r\n"
+					+ "(Quem jogar primeiro indica uma\r\n"
+					+ "posição (exemplo: 6-5)\r\n"
+					+ "\r\n"
+					+ "Cada jogador tem direito a 3 tiros.\r\n"
+					+ "No final das 3 jogadas o adversário\r\n"
+					+ "indicará se acertou,dizendo “Tiro” \r\n"
+					+ "(e o nome do navio onde acertou) \r\n"
+					+ "ou “Água” caso não\r\n"
+					+ "tenha acertado\r\n"
+					+ "\r\n"
+					+ "A pessoa deverá então marcar uma\r\n"
+					+ "cruz ou ponto na grelha de Ataque\r\n"
+					+ "para tentar\r\n"
+					+ "\r\n"
+					+ "Descobrir onde se encontram os\r\n"
+					+ "Navios do adversário\r\n"
+					+ "\r\n"
+					+ "Se conseguir afundar um navio, o\r\n"
+					+ "adversário terá de dizer “Afundou\r\n"
+					+ "(o meu Porta-Aviões (ou outro navio)\r\n"
+					+ "\r\n"
+					+ "Ganha o que afundar todos os.\r\n"
+					+ "navios primeiro.\r\n"
+					+ "\r\n"
+					+ "Boa Sorte\r\n"
+					+ "\r\n"
+					+ "");
+		}else if(e.getSource()==recordMenu) {
+			JOptionPane.showMessageDialog(null, "Top 10 : \n" + p1.treatRecords());
+		}else if(e.getSource()==exitMenu) {
+			System.exit(0);
+		}
+		
 		setOptionsShips();
 		
 		if(e.getSource()== saveButtonCustom) {
 			p1.setTries(Integer.parseInt(quantField.getText()));
+			p2.setTries(Integer.parseInt(quantField.getText()));
 			panelCustom.setVisible(false);
 			panelName.setVisible(true);
 			requestName(saveButtonP1);
@@ -580,14 +890,14 @@ public class Janela extends JFrame implements ActionListener{
 		}
 		
 		if(e.getSource()==orientationButton) {
-			if(orientationButton.getText()=="0") {
-				orientationButton.setText("90");
-			}else if(orientationButton.getText()=="90") {
-				orientationButton.setText("180");
-			}else if(orientationButton.getText()=="180") {
-				orientationButton.setText("270");
-			}else if(orientationButton.getText()=="270") {
-				orientationButton.setText("0");
+			if(orientationButton.getText()=="↑") {
+				orientationButton.setText("→");
+			}else if(orientationButton.getText()=="→") {
+				orientationButton.setText("↓");
+			}else if(orientationButton.getText()=="↓") {
+				orientationButton.setText("←");
+			}else if(orientationButton.getText()=="←") {
+				orientationButton.setText("↑");
 			}
 			
 		}
@@ -617,7 +927,7 @@ public class Janela extends JFrame implements ActionListener{
 			ship.setSelectedShip("");
 			nameField.setText("");
 			requestName(saveButtonP2);
-			p1.setTries(p1.getTries()+1);
+			p1.setTries(1);
 		}
 		
 		if(e.getSource() == saveButtonP2) {
@@ -669,7 +979,6 @@ public class Janela extends JFrame implements ActionListener{
 							timer.pauseP1();
 							p1.putOnRecords(timerLabel);
 							JOptionPane.showMessageDialog(null,"Parabéns "+ p1.getName() +" - Você venceu a partida");
-							createPanelInitial();
 							panelBoard.setVisible(false);
 							panelTitle.removeAll();
 							panelTitle.setVisible(false);
