@@ -12,7 +12,8 @@ import javax.swing.JLabel;
 
 public class Player {
 	private String name="";
-	private int tries=4;
+	private int tries=5;
+	
 	private int attackTries = 3;
 	private int right;
 	private boolean victory = false;
@@ -112,4 +113,6 @@ public class Player {
 	public void setVictory(boolean victory) {
 		this.victory = victory;
 	}
+
+	
 }

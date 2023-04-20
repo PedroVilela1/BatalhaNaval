@@ -12,7 +12,6 @@ public abstract class Board implements BoardInterface{
 	public Board() {
 		for(int i=0; i<10;i++) {
 			for(int j=0; j<10 ; j++) {
-				
 				gridButton[i][j]= new JButton(" ");
 				gridButton[i][j].setBackground(new Color(255,255,255));
 			}

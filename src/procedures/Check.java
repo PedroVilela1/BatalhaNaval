@@ -1,5 +1,7 @@
 package procedures;
 
+import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -23,7 +25,7 @@ public class Check {
 			
 		for(int i =0;i< 10;i++) {
 			for(int j=0;j< 10;j++) {
-				if(defenseBoard.getGridButton()[i][j].getText().equals(attackBoard.getGridButton()[i][j].getText()) && defenseBoard.getGridButton()[i][j].getText().equals("N")) {
+				if(attackBoard.getGridButton()[i][j].getText()=="X"&& defenseBoard.getGridButton()[i][j].getText().equals("N")) {
 					contVictory++;
 				}
 			}
@@ -35,9 +37,12 @@ public class Check {
 		
 	}
 	
-	public void checkRight(DefenseBoard defenseBoard,Player p,int numberX,int numberY) {
+	public void checkRight(DefenseBoard defenseBoard,Player p,int numberX,int numberY,AttackBoard attackBoard) {
 		if(defenseBoard.getGridButton()[numberX][numberY].getText().equals("N")) {
 			p.setRight(p.getRight()+1);
+			attackBoard.getGridButton()[numberX][numberY].setBackground(new Color(0,255,0));
+		}else {
+			attackBoard.getGridButton()[numberX][numberY].setBackground(new Color(255,0,0));
 		}
 		 
 	}
@@ -56,74 +61,90 @@ public class Check {
 	public boolean checkDefenseBoard(Ship ship,DefenseBoard defenseBoard,JButton orientationButton,int numberX,int numberY) {
 		boolean response = true;
 		if(orientationButton.getText()=="↑") {
-			if(ship.getLength()==1) {
+			if(ship.getSelectedShip()=="Ship1") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"){
 					response = false;
 				}
-			}else if(ship.getLength()==2) {
+			}else if(ship.getSelectedShip()=="Ship2") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-1][numberY].getText()=="N") {
 					response = false;
 				}
-			}else if(ship.getLength()==3) {
+			}else if(ship.getSelectedShip()=="Ship3") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-1][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-2][numberY].getText()=="N") {
 					response = false;
 				}
-			}else if(ship.getLength()==4) {
+			}else if(ship.getSelectedShip()=="Ship4") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-1][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-2][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-3][numberY].getText()=="N") {
+					response = false;
+				}
+			}else if(ship.getSelectedShip()=="PortaAvioes") {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-1][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-2][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX-2][numberY-1].getText()=="N"||defenseBoard.getGridButton()[numberX-2][numberY+1].getText()=="N") {
 					response = false;
 				}
 			}
 		}else if(orientationButton.getText()=="→") {
-			if(ship.getLength()==1) {
+			if(ship.getSelectedShip()=="Ship1") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"){
 					response = false;
 				}
-			}else if(ship.getLength()==2) {
+			}else if(ship.getSelectedShip()=="Ship2") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+1].getText()=="N") {
 					response = false;
 				}
-			}else if(ship.getLength()==3) {
+			}else if(ship.getSelectedShip()=="Ship3") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+1].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+2].getText()=="N") {
 					response = false;
 				}
-			}else if(ship.getLength()==4) {
+			}else if(ship.getSelectedShip()=="Ship4") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+1].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+2].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+3].getText()=="N") {
+					response = false;
+				}
+			}else if(ship.getSelectedShip()=="PortaAvioes") {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+1].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY+2].getText()=="N"||defenseBoard.getGridButton()[numberX-1][numberY+2].getText()=="N"||defenseBoard.getGridButton()[numberX+1][numberY+2].getText()=="N") {
 					response = false;
 				}
 			}
 		}else if(orientationButton.getText()=="↓") {
-			if(ship.getLength()==1) {
+			if(ship.getSelectedShip()=="Ship1") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"){
 					response = false;
 				}
-			}else if(ship.getLength()==2) {
+			}else if(ship.getSelectedShip()=="Ship2") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+1][numberY].getText()=="N") {
 					response = false;
 				}
-			}else if(ship.getLength()==3) {
+			}else if(ship.getSelectedShip()=="Ship3") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+1][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+2][numberY].getText()=="N") {
 					response = false;
 				}
-			}else if(ship.getLength()==4) {
+			}else if(ship.getSelectedShip()=="Ship4") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+1][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+2][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+3][numberY].getText()=="N") {
+					response = false;
+				}
+			}else if(ship.getSelectedShip()=="PortaAvioes") {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+1][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+2][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX+2][numberY-1].getText()=="N"||defenseBoard.getGridButton()[numberX+2][numberY+1].getText()=="N") {
 					response = false;
 				}
 			}
 		}else if(orientationButton.getText()=="←") {
-			if(ship.getLength()==1) {
+			if(ship.getSelectedShip()=="Ship1") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"){
 					response = false;
 				}
-			}else if(ship.getLength()==2) {
+			}else if(ship.getSelectedShip()=="Ship2") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-1].getText()=="N") {
 					response = false;
 				}
-			}else if(ship.getLength()==3) {
+			}else if(ship.getSelectedShip()=="Ship3") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-1].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-2].getText()=="N") {
 					response = false;
 				}
-			}else if(ship.getLength()==4) {
+			}else if(ship.getSelectedShip()=="Ship4") {
 				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-1].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-2].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-3].getText()=="N") {
+					response = false;
+				}
+			}else if(ship.getSelectedShip()=="PortaAvioes") {
+				if(defenseBoard.getGridButton()[numberX][numberY].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-1].getText()=="N"||defenseBoard.getGridButton()[numberX][numberY-2].getText()=="N"||defenseBoard.getGridButton()[numberX-1][numberY-2].getText()=="N"||defenseBoard.getGridButton()[numberX+1][numberY-2].getText()=="N") {
 					response = false;
 				}
 			}
@@ -134,7 +155,7 @@ public class Check {
 	
 	public boolean checkAttackBoard(AttackBoard attackBoard,int numberX,int numberY) {
 		boolean response=true;
-		if(attackBoard.getGridButton()[numberX][numberY].getText()=="N"){
+		if(attackBoard.getGridButton()[numberX][numberY].getText()=="X"){
 			response = false;
 		}
 		return response;
