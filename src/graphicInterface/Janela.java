@@ -17,13 +17,12 @@ public class Janela extends JFrame implements ActionListener{
 	private Check check = new Check();
 	private Ship ship = new Ship();
 	
-	
-	JMenuBar menuBar = new JMenuBar();
+	private JMenuBar menuBar = new JMenuBar();
 	
 	private JMenuItem homeMenu = new JMenuItem("Home");
     private JMenuItem recordMenu = new JMenuItem("Recorde");
-    JMenuItem exitMenu = new JMenuItem("Sair");
-    JMenuItem instructionMenu = new JMenuItem("Instruções");
+    private JMenuItem exitMenu = new JMenuItem("Sair");
+    private JMenuItem instructionMenu = new JMenuItem("Instruções");
 	
 	private DefenseBoard defenseBoardP1 = new DefenseBoard();
 	private DefenseBoard defenseBoardP2 = new DefenseBoard();

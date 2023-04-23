@@ -6,12 +6,4 @@ Gabi - 00:00:02
 Pedro - 00:00:07
 Pedro - 00:00:03
 Lindoval - 00:00:10
-Junior - 00:00:04
-batista - 00:00:01
-Amanda - 00:00:06
-Amanda - 00:00:09
-Pedro - 00:00:08
- - 00:00:08
-Pedro - 00:02:33
-Pedro - 00:00:34
-Pedro - 00:00:05
+Pedro - 00:01:40
