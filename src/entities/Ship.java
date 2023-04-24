@@ -8,6 +8,11 @@ public class Ship {
 	private int quantShip3=1;
 	private int quantShip4=1;
 	private int quantPortaAvioes=1;
+	private int quantShip1Final=1;
+	private int quantShip2Final=1;
+	private int quantShip3Final=1;
+	private int quantShip4Final=1;
+	private int quantPortaAvioesFinal=1;
 	
 	public int getLength() {
 		return length;
@@ -59,5 +64,35 @@ public class Ship {
 
 	public void setQuantPortaAvioes(int quantPortaAvioes) {
 		this.quantPortaAvioes = quantPortaAvioes;
+	}
+	public int getQuantShip1Final() {
+		return quantShip1Final;
+	}
+	public void setQuantShip1Final(int quantShip1Final) {
+		this.quantShip1Final = quantShip1Final;
+	}
+	public int getQuantShip2Final() {
+		return quantShip2Final;
+	}
+	public void setQuantShip2Final(int quantShip2Final) {
+		this.quantShip2Final = quantShip2Final;
+	}
+	public int getQuantShip3Final() {
+		return quantShip3Final;
+	}
+	public void setQuantShip3Final(int quantShip3Final) {
+		this.quantShip3Final = quantShip3Final;
+	}
+	public int getQuantShip4Final() {
+		return quantShip4Final;
+	}
+	public void setQuantShip4Final(int quantShip4Final) {
+		this.quantShip4Final = quantShip4Final;
+	}
+	public int getQuantPortaAvioesFinal() {
+		return quantPortaAvioesFinal;
+	}
+	public void setQuantPortaAvioesFinal(int quantPortaAvioesFinal) {
+		this.quantPortaAvioesFinal = quantPortaAvioesFinal;
 	}
 }

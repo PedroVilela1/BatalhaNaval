@@ -1,9 +1,18 @@
 package procedures;
 
-import graphicInterface.Janela;
+import entities.*;
+
+import graphicInterface.*;
+
 
 public class Main {
-	public static void main(String[] args) {		
-		new Janela();
+	public static void main(String[] args) {
+		
+		
+		Janela janela = new Janela();
+		
+		
+		
+		
 	}
 }

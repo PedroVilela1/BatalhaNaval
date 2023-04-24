@@ -1,5 +1,7 @@
 package entities;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,7 +12,7 @@ import java.util.Arrays;
 
 import javax.swing.JLabel;
 
-public class Player {
+public class Player{
 	private String name="";
 	private int tries=5;
 	
@@ -34,7 +36,7 @@ public class Player {
 		String record="";
 		try {
 			FileReader reader = new FileReader("record.txt");
-			int caracter= reader.read();
+			int caracter = reader.read();
 			while(caracter!=-1) {
 				record = record + (char)caracter;
 				caracter=reader.read();
